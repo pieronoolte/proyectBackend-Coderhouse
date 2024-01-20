@@ -73,7 +73,7 @@ class CartsService {
     } else {
       const productCart = Cart.products[indexCart];
       productCart.quantity++;
-      return Cart;
+      return productCart;
     }
   }
 

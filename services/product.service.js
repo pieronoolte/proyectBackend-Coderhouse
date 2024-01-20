@@ -39,7 +39,7 @@ class ProductsService {
     if(!product){
       throw boom.notFound('Product not found');
     }
-    if(product.status){
+    if(!product.status){
       throw boom.conflict('Product is block');
     }
     return product;
@@ -67,8 +67,8 @@ class ProductsService {
     return this.products[index];
   }
 
-  async delete(pid) {
-    const index = this.products.findIndex(item => item.id === pid)
+  async delete(id) {
+    const index = this.products.findIndex(item => item.id === id)
     if(index === -1){
       throw boom.notFound('Product not found');
     }

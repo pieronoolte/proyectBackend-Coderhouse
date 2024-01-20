@@ -1,7 +1,8 @@
 const express = require('express');
 const CartsService = require('./../services/cart.service');
-// const validatorHandler = require('./../middlewares/validator.handler');
-// const { createProductSchema, updateProductSchema, getProductSchema } = require('./../schemas/product.schema');
+const validatorHandler = require('./../middlewares/validator.handler');
+const { getProductSchema } = require('./../schemas/product.schema');
+const { getCartSchema} = require('./../schemas/cart.schema');
 const router = express.Router();
 const service = new CartsService
 
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
 
 
 router.get('/:cid',
-  // validatorHandler(getProductSchema, 'params'),
+  validatorHandler(getCartSchema, 'params'),
   async (req, res, next) => {
     try {
       const { cid } = req.params;
@@ -30,21 +31,20 @@ router.get('/:cid',
 
 
 router.post('/',
-  // validatorHandler(createProductSchema, 'body'),
   async (req, res) => {
     const newProduct = await service.createCart();
     res.status(201).json(newProduct);
   })
 
- // validatorHandler(getProductSchema, 'params'),
-  // validatorHandler(updateProductSchema, 'body'),
-router.post('/:cid/product/:pid',
 
+
+router.post('/:cid/product/:pid',
+  validatorHandler(getCartSchema, 'params'),
   async (req, res, next) => {
     try {
       const { cid } = req.params;
       const { pid } = req.params;
-      const { qty} = req.query;
+      const { qty } = req.query;
       const quantity = qty;
       const product = await service.addProduct(cid, pid, quantity);
       res.json(product);

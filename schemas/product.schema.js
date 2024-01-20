@@ -1,7 +1,8 @@
 const Joi = require('joi');
 
-const id = Joi.string().uuid();
-const name = Joi.string();
+const pid = Joi.string().uuid();
+const title = Joi.string();
+const description = Joi.string();
 const price = Joi.number();
 const code= Joi.number();
 const status = Joi.boolean();
@@ -17,16 +18,26 @@ const createProductSchema = Joi.object({
   status: status.required(),
   stock: stock.required(),
   category: category.required(),
-  thimbnails: thumbnails.optional()
+  thumbnails: thumbnails.optional()
 });
 
 const updateProductSchema = Joi.object({
-  name: name,
-  price: price,
+  title: title.optional(),
+  description: description.optional(),
+  code: code.optional(),
+  price: price.optional(),
+  status: status.optional(),
+  stock: stock.optional(),
+  category: category.optional(),
+  thumbnails: thumbnails.optional()
 });
 
 const getProductSchema = Joi.object({
-  id: id.required(),
+  pid: pid.required(),
 });
 
-module.exports = {createProductSchema, updateProductSchema, getProductSchema};
+const deleteProductSchema = Joi.object({
+  pid: pid.required(),
+});
+
+module.exports = {createProductSchema, updateProductSchema, getProductSchema, deleteProductSchema};
