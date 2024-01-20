@@ -1,14 +1,23 @@
 const Joi = require('joi');
 
 const id = Joi.string().uuid();
-const name = Joi.string().min(3).max(15);
-const price = Joi.number().integer().min(10);
-const image = Joi.string().uri();
+const name = Joi.string();
+const price = Joi.number();
+const code= Joi.number();
+const status = Joi.boolean();
+const stock =Joi.number().min(10).max(100);
+const category = Joi.string();
+const thumbnails = Joi.string().uri();
 
 const createProductSchema = Joi.object({
-  name: name.required(),
+  title: title.required(),
+  description: description.required(),
+  code: code.required(),
   price: price.required(),
-  image: image.required()
+  status: status.required(),
+  stock: stock.required(),
+  category: category.required(),
+  thimbnails: thumbnails.optional()
 });
 
 const updateProductSchema = Joi.object({

@@ -54,8 +54,8 @@ class ProductsService {
     return newProduct;
   }
 
-  async update(id,changes) {
-    const index = this.products.findIndex(item => item.id === id)
+  async update(pid,changes) {
+    const index = this.products.findIndex(item => item.id === pid)
     if(index === -1){
       throw boom.notFound('Product not found');
     }
@@ -67,8 +67,8 @@ class ProductsService {
     return this.products[index];
   }
 
-  async delete(id) {
-    const index = this.products.findIndex(item => item.id === id)
+  async delete(pid) {
+    const index = this.products.findIndex(item => item.id === pid)
     if(index === -1){
       throw boom.notFound('Product not found');
     }
