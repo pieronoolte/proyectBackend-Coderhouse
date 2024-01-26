@@ -46,6 +46,13 @@ class CartsService {
     return products;
   }
 
+  async getRandomCart() {
+    const randomIndex = Math.floor(Math.random() * this.carts.length);
+    const randomCart = this.carts[randomIndex];
+    return randomCart.products;
+  }
+
+
   async createCart() {
     const newCart = {
       id: faker.string.uuid(),
@@ -78,5 +85,7 @@ class CartsService {
   }
 
 }
+
+
 
 module.exports = CartsService;

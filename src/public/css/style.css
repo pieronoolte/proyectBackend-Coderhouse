@@ -1,0 +1,23 @@
+.form__input{
+  width: 250px;
+  height: 20px;
+}
+
+.form__button{
+  width: 80px;
+  height: 40px;
+  font-size: 20px;
+}
+
+.li__products{
+  display: flex;
+  flex-direction: column;
+}
+
+.li__products p{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+

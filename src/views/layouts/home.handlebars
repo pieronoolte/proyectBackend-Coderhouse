@@ -1,0 +1,15 @@
+<div>
+  <h1> ¡Welcome to your fauvorite online shop!</h1>
+  <h2>Products:</h2>
+      <ul>
+        {{#each products}}
+        <li>
+          <div>
+            Name: <p>{{this.title}}</p> </br>
+            Price: <p>{{this.price}}</p>
+          </div>
+          </li>
+
+        {{/each}}
+      </ul>
+</div>

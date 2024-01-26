@@ -1,10 +1,9 @@
 const express = require('express');
-const CartsService = require('./../services/cart.service');
-const validatorHandler = require('./../middlewares/validator.handler');
-const { getProductSchema } = require('./../schemas/product.schema');
-const { getCartSchema} = require('./../schemas/cart.schema');
+const CartsService = require('../services/cart.service');
+const validatorHandler = require('../middlewares/validator.handler');
+const { getCartSchema} = require('../schemas/cart.schema');
 const router = express.Router();
-const service = new CartsService
+const service = new CartsService();
 
 
 
