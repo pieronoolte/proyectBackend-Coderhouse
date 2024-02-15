@@ -9,7 +9,7 @@ const handlebars  = require('express-handlebars');
 const routerApi = require('./routes');
 const {logErrors, errorHandler, boomErrorHandler} = require('./middlewares/error.handler')
 const port = process.env.PORT ||  8080;
-
+const mongoose = require('mongoose');
 
 
 app.use(express.json());
@@ -39,9 +39,6 @@ app.get('/ping', (req, res) => {
 
 app.set('socketio', io);
 
-
-
-
 // Routes
 routerApi(app);
 
@@ -50,7 +47,12 @@ app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
+
+
+mongoose.connect("mongodb://root:root123@localhost:27017?tls=false");
+
 httpServer.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log('Esta funcionando en ' + port);
 });
 

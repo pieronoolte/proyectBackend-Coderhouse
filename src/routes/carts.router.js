@@ -1,11 +1,7 @@
 const express = require('express');
-const CartsService = require('../services/cart.service');
-const validatorHandler = require('../middlewares/validator.handler');
-const { getCartSchema} = require('../schemas/cart.schema');
+const CartsService = require('../dao/models/cart.dao');
 const router = express.Router();
 const service = new CartsService();
-
-
 
 router.get('/', async (req, res) => {
   const { limit } = req.query;
@@ -15,9 +11,7 @@ router.get('/', async (req, res) => {
 
 });
 
-
 router.get('/:cid',
-  validatorHandler(getCartSchema, 'params'),
   async (req, res, next) => {
     try {
       const { cid } = req.params;
@@ -28,17 +22,13 @@ router.get('/:cid',
     }
   });
 
-
 router.post('/',
   async (req, res) => {
     const newProduct = await service.createCart();
     res.status(201).json(newProduct);
   })
 
-
-
-router.post('/:cid/product/:pid',
-  validatorHandler(getCartSchema, 'params'),
+router.put('/:cid/product/:pid',
   async (req, res, next) => {
     try {
       const { cid } = req.params;
@@ -51,7 +41,5 @@ router.post('/:cid/product/:pid',
       next(error)
     }
   });
-
-
 
 module.exports = router

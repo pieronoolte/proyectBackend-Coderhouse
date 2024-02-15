@@ -5,14 +5,17 @@ module.exports = hhtpServer => {
   const { getProducts } = require('./routes/realTime.router');
 
   io.on("connection", socket => {
-
+    // eslint-disable-next-line no-console
     console.log("id socket conectado", socket.id);
 
     socket.on("disconnect", () => {
+      // eslint-disable-next-line no-console
       console.log("El Socket " + socket.io + " se ha desconectado");
     });
 
+
     getProducts().then((products) => {
+      // eslint-disable-next-line no-console
       console.log(products);
 
       socket.emit("Products", products);
@@ -26,7 +29,9 @@ module.exports = hhtpServer => {
     });
 
     socket.on("deleteProduct", data => {
+      // eslint-disable-next-line no-console
       console.log(data);
+      // eslint-disable-next-line no-console
       console.log(`se ha eliminado el producto de nombre ${data.title}`);
       socket.emit("productDelete", data);
     });

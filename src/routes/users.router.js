@@ -1,6 +1,6 @@
 const express = require('express');
-const UsersService = require('../services/user.service');
-const CartsService = require('../services/cart.service');
+const UsersService = require('../dao/models/user.dao');
+const CartsService = require('../dao/models/cart.dao');
 const router = express.Router();
 const service = new UsersService();
 const serviceCart = new CartsService();
@@ -14,47 +14,25 @@ router.get('/', async (req, res) => {
 
 });
 
-
 router.get('/:uid',
-  // validatorHandler(getProductSchema, 'params'),
   async (req, res, next) => {
     try {
       const isActiveString = req.query.isActive;
       const isActive = isActiveString ? isActiveString.toLowerCase() === 'true' : false;
       const { uid } = req.params;
-      const userone = await service.findOne(uid);
-      const productsCart = await serviceCart.getRandomCart();
+      const user = await service.findOne(uid)
       console.log(isActive);
-      res.render('index', {
-        user: userone,
-        isActive: isActive,
-        products: productsCart
-      });
+      console.log(user.name);
+      const productsCart = await serviceCart.getRandomCart()
+
+        res.render('index', {
+          name: user.name,
+          isActive: isActive,
+          products: productsCart
+        });
     } catch (error) {
       next(error)
     }
   });
-
-
-// router.get('/:uid/cart/_cid',
-//   // validatorHandler(getProductSchema, 'params'),
-//   async (req, res, next) => {
-//     try {
-
-//       const isActiveString = req.query.isActive;
-//       const isActive = isActiveString.toLowerCase() === 'true';
-//       const { uid } = req.params;
-//       const shop = isActive || "false"
-//       const userone = await service.findOne(uid);
-//       const cartone = await serviceCart.matchUser();
-//       res.render('index', {
-//         user: userone,
-//         isActive: shop,
-//         cart: cartone
-//       });
-//     } catch (error) {
-//       next(error)
-//     }
-//   });
 
 module.exports = router

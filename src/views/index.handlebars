@@ -1,11 +1,11 @@
 <div>
-  <h1> ¡Hola, {{user.name}}! ¡Qué gusto verte!</h1>
+  <h1> ¡Hola, {{name}}! ¡Qué gusto verte!</h1>
   {{#if isActive}}
   <h2>Tu carrito de compras:</h2>
     {{#each products}}
       <ul>
         <li>id: <p>{{this.id}}</p></li>
-        <li>qunatity: <p>{{this.quantity}}</p></li>
+        <li>quantity: <p>{{this.quantity}}</p></li>
       </ul>
     {{/each}}
   {{else}}

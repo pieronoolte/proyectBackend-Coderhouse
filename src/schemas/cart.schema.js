@@ -1,18 +1,17 @@
-const Joi = require('joi');
 
-const cid = Joi.string().uuid();
-const pid = Joi.alternatives().try(
-  Joi.string().uuid(),
-  Joi.number()
-);
+const mongoose = require('mongoose');
+const defaultConnection = mongoose.connection;
+const ecomerceDb = defaultConnection.useDb('Ecomerce');
 
 
-const getCartSchema = Joi.object({
-  cid: cid.required(),
-  pid: pid.required(),
-
+const cartSchema = new mongoose.Schema({
+  products: {
+    type: Array,
+    required: true
+  },
 });
 
 
+const Carts = ecomerceDb.model('carts', cartSchema);
 
-module.exports = { getCartSchema};
+module.exports = Carts;

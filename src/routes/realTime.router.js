@@ -1,14 +1,10 @@
 const express = require('express');
-const ProductsService = require('../services/product.service');
-const validatorHandler = require('../middlewares/validator.handler');
-const { createProductSchema, updateProductSchema, getProductSchema,deleteProductSchema } = require('../schemas/product.schema')
+const ProductsService = require('../dao/models/product.dao');
 const router = express.Router();
-const service = new ProductsService();
 
 const getProducts = async () => {
-  return await service.find(5);
+  return await ProductsService.find(5)
 };
-
 
 router.get('/',async (req, res, next) => {
     try {
@@ -22,14 +18,5 @@ router.get('/',async (req, res, next) => {
     }
 
   });
-
-  // router.post('/',
-  // async (req, res) => {
-  //   const {nameProduct, priceProduct} = req.body;
-  //   const io = req.app.get('socketio');
-  //   io.emit("Hola", "Hola desde la ruta '/real-time'");
-  //   res.status(201).send("hola",{nameProduct, priceProduct});
-  // })
-
 
   module.exports = {router, getProducts}
