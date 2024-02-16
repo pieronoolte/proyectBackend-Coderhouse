@@ -1,3 +1,7 @@
+const { faker } = require('@faker-js/faker');
+const MessagesService = require('./dao/models/message.dao');
+const service = new MessagesService;
+
 module.exports = hhtpServer => {
 
   const { Server } = require('socket.io');
@@ -7,7 +11,6 @@ module.exports = hhtpServer => {
   io.on("connection", socket => {
     // eslint-disable-next-line no-console
     console.log("id socket conectado", socket.id);
-
     socket.on("disconnect", () => {
       // eslint-disable-next-line no-console
       console.log("El Socket " + socket.io + " se ha desconectado");
@@ -16,8 +19,6 @@ module.exports = hhtpServer => {
 
     getProducts().then((products) => {
       // eslint-disable-next-line no-console
-      console.log(products);
-
       socket.emit("Products", products);
     });
 
@@ -35,7 +36,20 @@ module.exports = hhtpServer => {
       console.log(`se ha eliminado el producto de nombre ${data.title}`);
       socket.emit("productDelete", data);
     });
-  });
 
-  return io
+
+    const user = faker.person.firstName();
+    socket.on("message", message => {
+      io.emit("message", {
+        user,
+        message
+      });
+      service.createMessage({
+        email: faker.internet.email(),
+        username: user,
+        message: message
+      })
+    });
+  })
 }
+// user:faker.internet.email(),

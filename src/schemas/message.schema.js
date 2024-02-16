@@ -5,10 +5,9 @@ const ecomerceDb = defaultConnection.useDb('Ecomerce');
 
 
 const messageSchema = new mongoose.Schema({
-  user: {
+  email: {
     type: String,
-    required: true,
-    unique: true,
+    required: false,
     validate: {
       validator: function(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -16,9 +15,13 @@ const messageSchema = new mongoose.Schema({
       message: props => `${props.value} no es un correo electrónico válido!`
     }
   },
+  username:{
+    type: String,
+    required: false
+  },
   message: {
     type: String,
-    required: true
+    required: false
   },
 });
 

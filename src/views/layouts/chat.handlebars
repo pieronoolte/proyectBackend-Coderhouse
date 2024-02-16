@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link type="text/css" href="css/chat.css">
+
+  <title>Ecomerce chat!</title>
+</head>
+
+<body>
+  <header>
+    <h1>Ecomerce Chat</h1>
+  </header>
+
+  <main>
+    <div id="all-messages">
+      <div class="message">
+        <div class="message-body">
+          <div class="user-info">
+            <span class="username">Juano</span>
+            <span class="time">Hace 1 segundo</span>
+          </div>
+          <p>Hola una consulta</p>
+
+        </div>
+      </div>
+
+      <div class="message">
+        <div class="message-body">
+          <div class="user-info">
+            <span class="username">Pepito</span>
+            <span class="time">Hace 1 segundo</span>
+          </div>
+          <p>en que te puedo ayudar?</p>
+
+        </div>
+      </div>
+    </div>
+
+      <div class="send-mesagges">
+        <input type="text" id="message">
+        <button type="button" id="send-message" class="btn secondary">Enviar</button>
+      </div>
+
+  </main>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/script.js"></script>
+</body>
+
+</html>

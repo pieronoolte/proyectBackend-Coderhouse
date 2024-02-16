@@ -14,7 +14,7 @@ function routerApi(app){
   router.use('/carts',cartsRouter);
   router.use('/users',usersRouter);
   router.use('/home',homeRouter);
-  app.use('/realTimeProducts/', realTimeRouter.router);
+  app.use('/realTimeProducts', realTimeRouter.router);
 
 }
 

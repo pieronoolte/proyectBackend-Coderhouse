@@ -18,9 +18,9 @@ app.use(express.json());
 app.engine('handlebars', handlebars.engine());
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine','handlebars');
+
 app.use(express.static(__dirname+'/public'));
-
-
+app.use('/realTimeProducts', express.static(path.join(__dirname, 'public')));
 // Pruebas
 app.get('/', (req, res) => {
   let testUser = {
@@ -35,8 +35,6 @@ app.get('/ping', (req, res) => {
 })
 
 // Llamo al servidor de socket.io
-//realtimeServer(httpServer);
-
 app.set('socketio', io);
 
 // Routes

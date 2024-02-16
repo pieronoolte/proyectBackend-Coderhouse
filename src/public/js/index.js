@@ -1,4 +1,5 @@
 
+// eslint-disable-next-line no-undef
 const socket = io();
 
 socket.on('connect', () => {
@@ -16,15 +17,18 @@ socket.io.on("reconnect", () => {
 
 let Products = []
 socket.on("Products", products => {
-  console.log(products)
+
   Products = [...Products, ...products]
 });
 
 
+// eslint-disable-next-line no-undef
 const addProduct = document.querySelector('#addProduct')
 
 addProduct.addEventListener("click", () => {
+  // eslint-disable-next-line no-undef
   let nameProduct = document.querySelector('#nameProduct').value;
+  // eslint-disable-next-line no-undef
   let priceProduct = document.querySelector('#priceProduct').value;
 
 
@@ -32,18 +36,19 @@ addProduct.addEventListener("click", () => {
     nameProduct,
     priceProduct
   });
-
+// eslint-disable-next-line no-undef
   document.querySelector('#nameProduct').value = "";
+  // eslint-disable-next-line no-undef
   document.querySelector('#priceProduct').value = "";
 });
 
 
 socket.on("productNew", ({ nameProduct, priceProduct }) => {
-
+// eslint-disable-next-line no-undef
   const productList = document.getElementById('productList');
   Products = [...Products, { title: nameProduct, price: priceProduct }]
   console.log(Products)
-
+// eslint-disable-next-line no-undef
   const li = document.createElement('li');
   li.innerHTML = `
       <div class="li__products">
@@ -55,10 +60,11 @@ socket.on("productNew", ({ nameProduct, priceProduct }) => {
 });
 
 
-
+// eslint-disable-next-line no-undef
 const deleteProduct = document.querySelector('#deleteProduct')
 
 deleteProduct.addEventListener("click", () => {
+  // eslint-disable-next-line no-undef
   let nameDelete = document.querySelector('#nameDelete').value;
 
   const ProductDelete = Products.find(item => item.title === nameDelete)
@@ -67,21 +73,21 @@ deleteProduct.addEventListener("click", () => {
     // Agregar Toast
   } else {
     socket.emit("deleteProduct", ProductDelete);
+    // eslint-disable-next-line no-undef
     document.querySelector('#nameDelete').value = "";
   }
-
-
 });
 
 
 socket.on("productDelete", data => {
-
+// eslint-disable-next-line no-undef
   const productList = document.getElementById('productList');
   Products = Products.filter(item => item.title !== data.title)
   console.log(Products)
 
   productList.innerHTML = "";
   Products.forEach((product) => {
+    // eslint-disable-next-line no-undef
     const li = document.createElement('li');
     li.innerHTML = `
         <div class="li__products">
