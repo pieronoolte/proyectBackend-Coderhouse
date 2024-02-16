@@ -181,7 +181,7 @@ main {
   justify-content: center;
 }
 
-main form {
+/* main form {
   width: 50%;
   padding: 20px;
 }
@@ -194,7 +194,7 @@ main form .input-group label {
 
 main form .button-container {
   margin-top: 10px;
-}
+} */
 
 
 .form__input{
