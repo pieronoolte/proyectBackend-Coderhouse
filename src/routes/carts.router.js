@@ -42,4 +42,38 @@ router.put('/:cid/product/:pid',
     }
   });
 
+router.put('/:cid',
+  async (req, res, next) => {
+    try {
+      const { cid } = req.params;
+      const product = await service.updateCart(cid);
+      res.json(product);
+    } catch (error) {
+      next(error)
+    }
+});
+
+router.delete('/:cid/product/:pid',
+  async (req, res, next) => {
+    try {
+      const { cid } = req.params;
+      const { pid } = req.params;
+      const product = await service.deleteProduct(cid, pid);
+      res.json(product);
+    } catch (error) {
+      next(error)
+    }
+  });
+
+router.delete('/:cid',
+  async (req, res, next) => {
+    try {
+      const { cid } = req.params;
+      const product = await service.deleteCart(cid);
+      res.json(product);
+    } catch (error) {
+      next(error)
+    }
+  });
+
 module.exports = router

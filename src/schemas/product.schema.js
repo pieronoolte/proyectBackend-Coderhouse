@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+var mongoosePaginate = require("mongoose-paginate-v2");
+
+
 const defaultConnection = mongoose.connection;
 const ecomerceDb = defaultConnection.useDb('Ecomerce');
 
@@ -45,6 +48,7 @@ const productSchema = new mongoose.Schema({
   }
 });
 
+productSchema.plugin(mongoosePaginate)
 
 const Products = ecomerceDb.model('products', productSchema);
 

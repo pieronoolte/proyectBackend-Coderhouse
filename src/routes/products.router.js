@@ -10,6 +10,15 @@ router.get('/', async (req, res) => {
   res.json(products);
 });
 
+router.get('/paginate', async (req, res) => {
+  const { limit } = req.query;
+  const { page } = req.query;
+  // const { category } = req.query;
+  const { sort } = req.query;
+  const products = await service.paginate(limit, page, sort);
+  res.json(products);
+});
+
 router.get('/:pid',
   async (req, res, next) => {
     try {

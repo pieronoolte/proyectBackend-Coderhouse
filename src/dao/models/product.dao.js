@@ -10,12 +10,24 @@ class ProductsService {
   }
 
   find(size) {
-    return  this.mongoDB.find(this.collection, size)
+    return this.mongoDB.find(this.collection, size);
   }
 
- findOne(pid) {
+  findOne(pid) {
     return this.mongoDB.findOne(this.collection, pid);
   }
+
+  async paginate(size, page, sort) {
+    const options = {
+      limit: size || 10,
+      page: page || 1,
+      sort: sort || { createdAt: -1 }
+    };
+
+    let result = await Products.paginate({},options)
+    return result
+  }
+
 
   createProduct(data) {
     return this.mongoDB.createOne(this.collection, data);
@@ -25,7 +37,7 @@ class ProductsService {
     return this.mongoDB.update(this.collection, pid, changes);
   }
 
- deleteProduct(pid) {
+  deleteProduct(pid) {
     return this.mongoDB.delete(this.collection, pid);
   }
 }
