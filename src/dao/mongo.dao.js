@@ -67,6 +67,7 @@ class MongoLib {
 
   async find(schema, size) {
     let document;
+    // let result;
     if (schema === Carts) {
       document = await schema.aggregate([
         {
@@ -92,8 +93,11 @@ class MongoLib {
               }
             }
           }
-        }
+        },
+        { $limit: size }
       ])
+      // const text = JSON.stringify(document, null, 2);
+      // // console.log(text);
     } else {
       document = await schema.find().limit(size).lean();
     }
@@ -102,7 +106,45 @@ class MongoLib {
 
 
   async findOne(schema, id) {
-    const document = await schema.findById(id);
+    let document;
+    if (schema === Carts) {
+
+      const carts = await this.find(Carts, 200);
+      const cartsJSON = JSON.stringify(carts);
+      const parsedCarts = JSON.parse(cartsJSON);
+      const as = parsedCarts.map(el => {
+        const product = el.products;
+        if (product) {
+          return product;
+        } else {
+          return null;
+        }
+      }).filter(el => el !== null);
+
+      const cart = await schema.findById(id).lean();
+
+      for (let i = 0; i < as.length; i++) {
+        let cartFOR = parsedCarts[i];
+        if (cartFOR && cartFOR._id == cart._id) {
+          let document1 = as[i]
+        //   let completeProducts = document1.map(item => ({
+        //     product: item.product,
+        //     quantity: item.quantity
+        // }));
+          document = {
+            _id: cartFOR._id,
+            products: document1
+        }
+        }
+      }
+
+
+
+
+
+    } else {
+      document = await schema.findById(id);
+    }
     if (!document) {
       const schemaName = this.stringSchema;
       throw boom.notFound(`${schemaName} not found`);
@@ -110,6 +152,9 @@ class MongoLib {
     if (!document.status && schema === 'products') {
       throw boom.conflict('Product is block');
     }
+
+    console.log(document.products)
+        console.log(document)
     return document;
   }
 

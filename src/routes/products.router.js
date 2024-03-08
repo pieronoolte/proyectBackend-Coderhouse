@@ -16,7 +16,7 @@ router.get('/paginate', async (req, res) => {
   // const { category } = req.query;
   const { sort } = req.query;
   const products = await service.paginate(limit, page, sort);
-  res.json(products);
+  res.render('layouts/products', products);
 });
 
 router.get('/:pid',

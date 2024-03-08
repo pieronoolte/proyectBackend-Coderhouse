@@ -15,8 +15,10 @@ router.get('/:cid',
   async (req, res, next) => {
     try {
       const { cid } = req.params;
-      const product = await service.findOne(cid);
-      res.json(product);
+      const cart = await service.findOne(cid);
+      res.render('layouts/cartId', {
+        products: cart
+      });
     } catch (error) {
       next(error)
     }

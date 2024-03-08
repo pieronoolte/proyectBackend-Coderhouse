@@ -1,0 +1,21 @@
+{{#each this}}
+{{#if _id}}
+<div>
+  <h1> ¡Welcome to your fauvorite online shop!</h1>
+  <h2> _id: {{_id}}</h2>
+  <h2>Products:</h2>
+      <ul>
+        {{#each products}}
+        <li>
+          <div>
+            Name: <p>{{this.product.title}}</p> </br>
+            Price: <p>{{this.product.price}}</p>
+            Price: <p>{{this.quantity}}</p>
+          </div>
+          </li>
+
+        {{/each}}
+      </ul>
+</div>
+{{/if}}
+{{/each}}
