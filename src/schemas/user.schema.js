@@ -16,12 +16,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  mail: {
+  email: {
     type: String,
     required: true
   },
-  Phone: {
-    type: Number,
+  phone: {
+    type: String,
     required: false,
     min: 8,
     max: 12
@@ -30,15 +30,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  Password: {
+  password: {
     type: String,
     required: false,
-    validate: {
-      validator: function(password) {
-        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,30}$/.test(password);
-      },
-      message: props => `${props.value} no cumple con los requisitos de contraseña. Debe contener al menos una minúscula, una mayúscula, un número, un signo y tener una longitud entre 7 y 30 caracteres.`
-    }
+    // validate: {
+    //   validator: function(password) {
+    //     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,30}$/.test(password);
+    //   },
+    //   message: props => `${props.value} no cumple con los requisitos de contraseña. Debe contener al menos una minúscula, una mayúscula, un número, un signo y tener una longitud entre 7 y 30 caracteres.`
+    // }
   },
 });
 

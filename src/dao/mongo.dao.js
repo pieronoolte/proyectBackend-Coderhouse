@@ -39,7 +39,7 @@ class MongoLib {
             name: faker.person.firstName(),
             lastname: faker.person.lastName(),
             birthdate: faker.date.birthdate(),
-            mail: faker.internet.email(),
+            email: faker.internet.email(),
             phone: faker.phone.number(),
             adress: faker.location.direction(),
             password: faker.internet.password()
@@ -138,10 +138,6 @@ class MongoLib {
         }
       }
 
-
-
-
-
     } else {
       document = await schema.findById(id);
     }
@@ -158,9 +154,15 @@ class MongoLib {
     return document;
   }
 
+  async findByEMail(schema, email) {
+    const document = await schema.findOne({email: email})
+
+    return document;
+  }
+
+
   async createOne(schema, data) {
     const document = await schema.create(data);
-
     return document;
   }
 

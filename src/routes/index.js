@@ -4,6 +4,8 @@ const cartsRouter = require('./carts.router');
 const usersRouter = require('./users.router');
 const homeRouter = require('./home.router');
 const realTimeRouter = require('./realTime.router');
+const sessionsRouter =require('./sessions.router')
+const viewsRouter = require('./views.router')
 
 function routerApi(app){
 
@@ -14,7 +16,9 @@ function routerApi(app){
   router.use('/carts',cartsRouter);
   router.use('/users',usersRouter);
   router.use('/home',homeRouter);
+  router.use('/sessions', sessionsRouter)
   app.use('/realTimeProducts', realTimeRouter.router);
+  app.use('/', viewsRouter)
 
 }
 
