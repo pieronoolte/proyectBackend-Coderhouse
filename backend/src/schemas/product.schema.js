@@ -45,6 +45,11 @@ const productSchema = new mongoose.Schema({
       },
       message: 'La URL de la imagen no es válida'
     }
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: false
   }
 });
 

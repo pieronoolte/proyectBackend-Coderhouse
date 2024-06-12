@@ -26,6 +26,6 @@ const messageSchema = new mongoose.Schema({
 });
 
 
-const Carts = ecomerceDb.model('messages', messageSchema);
+const Messages = ecomerceDb.model('messages', messageSchema);
 
-module.exports = Carts;
+module.exports = Messages;

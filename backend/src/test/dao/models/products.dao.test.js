@@ -27,7 +27,7 @@ describe('Test for Products Dao', () => {
   describe('Test for findProducts', () => {
     test('should return a list of products', async () => {
       // Arrange
-      const fakeProducts  = generateMongo(Products, 10);
+      const fakeProducts  = generateMongo(Products, 10, true);
       mockFindAll.mockResolvedValue(fakeProducts);
       // Act
       const products = await service.find(50);
@@ -42,7 +42,7 @@ describe('Test for Products Dao', () => {
   describe('Test for findOneProduct', () => {
     test('should return a list of products', async () => {
       // Arrange
-      const fakeProduct  = generateMongo(Products, 1);
+      const fakeProduct  = generateMongo(Products, 1, true);
       mockFindOne.mockResolvedValue(fakeProduct);
       // Act
       const product = await service.findOne(fakeProduct[0]._id);

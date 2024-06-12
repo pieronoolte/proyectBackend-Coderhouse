@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const defaultConnection = mongoose.connection;
 const ecomerceDb = defaultConnection.useDb('Ecomerce');
 
-
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -40,6 +39,24 @@ const userSchema = new mongoose.Schema({
     //   message: props => `${props.value} no cumple con los requisitos de contraseña. Debe contener al menos una minúscula, una mayúscula, un número, un signo y tener una longitud entre 7 y 30 caracteres.`
     // }
   },
+  role: {
+    type: String,
+    enum: ['client', 'premium', 'admin'],
+    default: 'client'
+  },
+  lastConnection: {
+    type: Date,
+    default: () => {
+      const date = new Date();
+      date.setDate(date.getDate() - 3);
+      return date;
+    },
+  },
+  cart: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Cart',
+    required: false
+  }
 });
 
 

@@ -5,14 +5,13 @@ const Users = require('../schemas/user.schema');
 const Carts = require('../schemas/cart.schema');
 const { productsCart } = require('../services/carts.service')
 
-const generateMongo = (schema, quantity, otherSchema ) => {
+const generateMongo = (schema, quantity, unitTest, otherSchema ) => {
   let fakeData=[];
   for (let i = 0; i < quantity; i++) {
     let structureSchema = {};
     switch (schema) {
       case Products:
         structureSchema = {
-          _id: Math.floor(Math.random() * (50000 - 10000) + 10000),
           title: faker.commerce.productName(),
           description: faker.lorem.sentence(),
           code: Math.floor(Math.random() * (50000 - 10000) + 10000),
@@ -25,24 +24,25 @@ const generateMongo = (schema, quantity, otherSchema ) => {
         break;
       case Users:
         structureSchema = {
-          _id: Math.floor(Math.random() * (50000 - 10000) + 10000),
           name: faker.person.firstName(),
           lastname: faker.person.lastName(),
           birthdate: faker.date.birthdate(),
           email: faker.internet.email(),
           phone: faker.phone.number(),
-          address: faker.address.streetAddress(),
+          address: faker.location.direction(),
           password: faker.internet.password()
         };
         break;
       case Carts:
         structureSchema = {
-          _id: Math.floor(Math.random() * (50000 - 10000) + 10000),
           products: productsCart(otherSchema),
         };
         break;
       default:
         break;
+    }
+    if(unitTest){
+      structureSchema=[structureSchema, {_id: Math.floor(Math.random() * (50000 - 10000) + 10000)} ]
     }
     fakeData= [...fakeData, structureSchema]
   }

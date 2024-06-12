@@ -1,8 +1,15 @@
 const UsersService = require('../dao/models/users.dao');
 const service = new UsersService();
+const CartsService = require('../dao/models/carts.dao');
+const serviceCart = new CartsService();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { config } = require('../../config');
+const mongoose = require('mongoose');
+const { object } = require('joi');
+const { ObjectId } = mongoose.Types;
+const Users = require('../schemas/user.schema')
+const Carts= require('../schemas/cart.schema')
 
 
 const getLogout = (req, res) => {
@@ -37,8 +44,23 @@ const postLogin = async (req, res) => {
       res.redirect('/api/sessions/login');
   }
 
-  let user = await service.getUserByCreds(email, password);
 
+  let user = await service.getUserByCreds(email, password);
+  console.log(user)
+  if (ObjectId.isValid(user._id)) {
+    console.log(user._id)
+    const createUser = await Carts.find({owner: user._id})
+    if(!createUser || !createUser.some(item => item.state === false)){
+      const newCart = await serviceCart.createCart(user._id)
+      await Users.findByIdAndUpdate(user._id, { cart: newCart._id });
+      console.log(newCart)
+    }else{
+      console.log("ya tiene carrito")
+    }
+    console.log(user)
+  }else{
+    console.log("no es correcto el id")
+  }
   if(!user){
       res.redirect('/api/sessions/login');
   } else {
@@ -48,12 +70,14 @@ const postLogin = async (req, res) => {
       lastname: user.lastname,
       email: user.email},
       config.jwtSecret, { expiresIn: '1h' });
+    console.log(token)
     res.cookie("jwt", token, {
         signed:true,
         httpOnly:true,
         maxAge: 1000*60*60
     });
-      res.redirect('/api/sessions/profile');
+
+    res.redirect('/api/home');
   }
 }
 
@@ -69,7 +93,7 @@ const postRegister = async (req, res) => {
       res.redirect('/api/sessions/register');
   }
 
-  let emailUsed = await service.getUserByEmail(email);
+  let emailUsed = await service.findByEmail(email)
 
   if(emailUsed){
       res.redirect('/api/sessions/register');

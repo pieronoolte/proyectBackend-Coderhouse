@@ -2,6 +2,7 @@ const request = require('supertest');
 const { createServer } = require('http');
 const app = require('../../app'); // Asegúrate de que la ruta sea correcta
 const port = 8081;
+const mongoose = require('mongoose');
 
 describe('Test for hello endpoint', () => {
 let server;
@@ -14,8 +15,9 @@ beforeAll(() => {
   });
 });
 
-afterAll((done) => {
-  server.close(done);
+afterAll(async () => {
+  await mongoose.connection.close();
+  await new Promise(resolve => server.close(resolve))
 });
 
 describe('GET /ping', () => {

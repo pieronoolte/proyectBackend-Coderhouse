@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modificación de rol de Usuario</title>
+</head>
+
+<body>
+  <div>
+    <h1>Bienvenido, {{user.name}} {{user.lastname}}</h1>
+
+    <p>Email: {{user.email}}</p>
+
+    <a href="/api/sessions/logout">Logout</a>
+
+    <p><a href='/api/sessions/login'>Log in</a></p>
+    <p><a href='/api/sessions/register'>Register</a></p>
+
+    <h2>My Products:</h2>
+      {{#if products.length}}
+        <ul id="productsList">
+          {{#each products}}
+          <li>
+            <div>
+              Name: <p>{{this.title}}</p> </br>
+              Price: <p>{{this.price}}</p>
+              <button class="deleteProduct" data-id="{{this._id}}">delete</button>
+            </div>
+          </li>
+        {{/each}}
+      {{else}}
+        <li>No tienes productos a la venta.</li>
+      {{/if}}
+    </ul>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('productsList').addEventListener('click', async (e) => {
+        if (e.target && e.target.classList.contains('deleteProduct')) {
+          const productId = e.target.getAttribute('data-id');
+          const actionUrl = `/api/products/${productId}`;
+
+          try {
+            const response = await fetch(actionUrl, {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            if (response.ok) {
+              // Redirigir a la página de productos actualizados
+              window.location.href = '/api/products/myproducts';
+            } else {
+              // Manejar el caso en que la eliminación no fue exitosa
+              console.error('Error eliminando producto:', response.statusText);
+              alert('Error eliminando producto');
+            }
+          } catch (error) {
+            console.error('Error deleting product:', error);
+            alert('Error deleting product');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

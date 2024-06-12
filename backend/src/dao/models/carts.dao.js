@@ -1,7 +1,7 @@
 const MongoLib = require('../mongo.dao')
 const Products = require('../../schemas/product.schema');
 const Carts = require('../../schemas/cart.schema');
-const { addProductCart, deleteProductCart, updateCart, getRandomCart, createCart , productsCart} = require('../../services/carts.service')
+const { addProductCart, deleteProductCart, updateCart, updateCartState, getRandomCart, createCart , productsCart} = require('../../services/carts.service')
 
 class CartsService {
 
@@ -19,8 +19,8 @@ class CartsService {
     return this.mongoDB.findOne(this.collection, pid);
   }
 
-  async createCart() {
-    const service = await createCart(this.collection)
+   async createCart(uid) {
+    const service = await createCart(this.collection, uid)
     return service
   }
 
@@ -48,6 +48,11 @@ class CartsService {
 
   async updateCart(cid) {
     const service = await updateCart(this.collection, this.otherCollection, cid)
+    return service
+  }
+
+  async updateCartState(cid) {
+    const service = await updateCartState(this.collection, cid)
     return service
   }
 

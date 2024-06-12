@@ -4,7 +4,9 @@ const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
 const Users = require('../schemas/user.schema');
 const Carts = require('../schemas/cart.schema');
-const { productsCart } = require('./carts.service')
+const { productsCart } = require('./carts.service');
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 
 const generateMongo = async (schema, quantity, otherSchema ) => {
   for (let i = 0; i < quantity; i++) {
@@ -20,6 +22,7 @@ const generateMongo = async (schema, quantity, otherSchema ) => {
           stock: Math.floor(Math.random() * (100 - 10) + 10),
           category: faker.commerce.department(),
           thumbnails: faker.image.url(),
+          owner: new ObjectId('000000000000000000000000')
         };
         break;
       case Users:
@@ -29,12 +32,13 @@ const generateMongo = async (schema, quantity, otherSchema ) => {
           birthdate: faker.date.birthdate(),
           email: faker.internet.email(),
           phone: faker.phone.number(),
-          address: faker.address.streetAddress(),
+          address: faker.location.direction(),
           password: faker.internet.password()
         };
         break;
       case Carts:
         structureSchema = {
+          owner: new ObjectId('000000000000000000000000'),
           products: await productsCart(otherSchema),
         };
         break;
@@ -43,7 +47,7 @@ const generateMongo = async (schema, quantity, otherSchema ) => {
     }
     try {
       await schema.create(structureSchema);
-      console.log('Data inserted successfully.');
+      console.log('Data inserted successfully.', schema);
     } catch (error) {
       console.error('Error inserting data:', error);
     }
@@ -83,7 +87,6 @@ const findMongo = async (schema, size) => {
       ])
     } else {
       document = await schema.find().limit(size).lean();
-      console.log(document)
     }
     return document
   } catch (error) {
@@ -122,7 +125,7 @@ const findOneMongo = async(bd, schema, id) => {
         }
       }
     } else {
-      document = await schema.findById(id);
+      document = await schema.findById(id).lean();
     }
     console.log(document)
     if (!document) {

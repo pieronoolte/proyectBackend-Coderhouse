@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modificación de rol de Usuario</title>
+</head>
+
+<body>
+  <h1>Modificación de rol de Uasuario</h1>
+
+  <form id="roleForm">
+    <ul>
+      <li>Name: {{user.name}}</li>
+      <li>Last name: {{user.lastname}}</li>
+      <li>Birthdate: {{user.birthdate}}</li>
+      <li>Email: {{user.email}}</li>
+      <li>Phone: {{user.phone}}</li>
+      <li>Address: {{user.address}}</li>
+      <li>Role: {{user.role}}</li>
+      <li>
+        Select NewRole:
+        <select name="role" id="roleSelect">
+          <option value="client">Client</option>
+          <option value="admin">Admin</option>
+          <option value="premium">Premium</option>
+        </select>
+      </li>
+    </ul>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById('roleForm').addEventListener('submit', async () => {
+      const role = document.getElementById('roleSelect').value;
+      const userId = '{{user._id}}'; // Obtener el ID del usuario desde el contexto de la plantilla
+
+      const actionUrl = `/api/users/${userId}/${role}`;
+
+      try {
+        const response = await fetch(actionUrl, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      } catch (error) {
+        console.error('Error updating role:', error);
+        alert('Error updating role');
+      }
+    });
+  </script>
+</body>
+
+</html>

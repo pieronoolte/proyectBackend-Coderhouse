@@ -11,10 +11,10 @@ class MongoLib {
   constructor(schema, otherSchema) {
     this.structureSchema = {};
     this.stringSchema = '';
-    this.generate(schema, 3, otherSchema)
+    // this.generate(schema, 1, otherSchema)
   }
 
-  async generate(schema, otherSchema, quantity) {
+  async generate(schema, quantity, otherSchema) {
     generateMongo(schema, quantity, otherSchema)
   }
 
@@ -174,18 +174,6 @@ class MongoLib {
   //     _id: e._id,
   //     quantity: Math.floor(Math.random() * (15 - 1) + 1)
   //   }));
-  //   return products;
-  // };
-
-  //   async productsCart() {
-  //   let products = [];
-  //   const quantityProducts = Math.floor(Math.random() * (6 - 1) + 1);
-  //   for (let i = 0; i < quantityProducts; i++) {
-  //     products.push({
-  //       _id: new ObjectId(),
-  //       quantity: Math.floor(Math.random() * (15 - 1) + 1),
-  //     });
-  //   }
   //   return products;
   // };
 }

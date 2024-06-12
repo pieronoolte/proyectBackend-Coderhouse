@@ -27,7 +27,7 @@ describe('Test for Users Dao', () => {
   describe('Test for findUserByEmail', () => {
     test('should return a user since email', async () => {
       // Arrange
-      const fakeUser = generateMongo(Users, 1);
+      const fakeUser = generateMongo(Users, 1, true);
       // console.log('fake:',fakeUser[0])
       mockFindByEmail.mockResolvedValue(fakeUser);
       // Act

@@ -5,17 +5,17 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-  res.redirect('/api/home');
+  res.redirect('/api/home/check');
 });
 
-router.get('/api/home', (req, res) => {
+router.get('/api/home/check', (req, res) => {
 
-  // if(req.signedCookies.jwt){
-  //     res.redirect('/api/sessions/profile');
-  // } else {
-  //     res.render('layouts/home');
-  // }
-  req.signedCookies.jwt ? res.redirect('/api/sessions/profile') : res.render('layouts/home');
+  if (req.signedCookies.jwt) {
+    res.redirect('/api/sessions/profile');
+  } else {
+    res.redirect('/api/sessions/register');
+  }
+  // req.signedCookies.jwt ? res.redirect('/api/sessions/profile') : res.redirect('/api/sessions/register');
 });
 
 router.get('/api/sessions/register', (req, res) => {
@@ -31,6 +31,11 @@ router.get('/api/sessions/login', (req, res) => {
   // }
   req.signedCookies.jwt ? res.redirect('/api/sessions/profile') : res.render('layouts/login');
 });
+
+// router.get('/api/products/myproducts', (req, res) => {
+
+//   req.signedCookies.jwt ? res.redirect('/api/home') : res.render('layouts/login');
+// });
 
 
 // router.get('/api/sessions/profile', async (req, res) => {

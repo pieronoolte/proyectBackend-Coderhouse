@@ -17,7 +17,7 @@ const cookieParser = require('cookie-parser');
 const swaggerjsdoc = require('swagger-jsdoc')
 const swaggerui = require('swagger-ui-express');
 // const { options } = require('joi');
-
+const nodemailer = require('nodemailer')
 app.use(express.json());
 
 // const swaggerOptions = {
@@ -32,6 +32,14 @@ app.use(express.json());
 // }
 
 
+const transport = nodemailer.createTransport({
+  service: 'gmail',
+  port: 587,
+  auth:{
+    user: 'pieronolte@gmail.com',
+    pass: 'ejfj vkmt amqr qyac'
+  }
+})
 
 
 
@@ -84,6 +92,28 @@ app.get('/pong', (req, res) => {
   res.send('ping')
 })
 
+app.get('/mail', async (req, res) => {
+  let imagePath = path.join(__dirname, 'public', 'images', 'imageMail.png');
+  let result = await transport.sendMail({
+    from: 'pieronolte@gmail.com',
+    to: 'pieronolte@gmail.com',
+    subject: 'Correo de prueba',
+    html:
+    `<div>
+    <h1> Este es un test!</h1>
+    <img src="cid:imageMail"/>
+    </div>`,
+    attachments: [{
+      filename:' imageMail.png',
+      path: imagePath,
+      cid:'imageMail'
+    }]
+  })
+
+  res.send({status: "success", result:" Email sent"})
+})
+
+
 // Llamo al servidor de socket.io
 app.set('socketio', io);
 
@@ -115,11 +145,19 @@ app.use(
 )
 
 
-mongoose.connect("mongodb://root:root123@localhost:27017?tls=false");
+mongoose.connect("mongodb://root:root123@localhost:27017?tls=false")
+.then(() => {
+  console.log('Connected to MongoDB');
+  })
+.catch(error => {
+  console.error('Error connecting to MongoDB:', error);
+});
+
 if (require.main === module) {
   httpServer.listen(port, () => {
     // eslint-disable-next-line no-console
     console.log('Esta funcionando en ' + port);
   });
 }
+
 module.exports = app;

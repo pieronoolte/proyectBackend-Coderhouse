@@ -28,7 +28,7 @@ describe('Test for Users Dao', () => {
   describe('Test for findUsers', () => {
     test('should return a list users', async () => {
       // Arrange
-      const fakeUsers = generateMongo(Users, 10);
+      const fakeUsers = generateMongo(Users, 10, true);
       // console.log('fake:',fakeUsers)
       mockFindAll.mockResolvedValue(fakeUsers);
       // Act

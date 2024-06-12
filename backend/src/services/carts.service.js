@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 const boom = require('@hapi/boom');
 const { ObjectId } = mongoose.Types;
+const Carts = require('../schemas/cart.schema');
 
 const addProductCart = async (schema, cid, pid, quantity) => {
   const document = await schema.findById(cid);
-  if (!document) {
-    throw boom.notFound(`${schema} not found`);
-  }
-
+  // if (!document) {
+  //   throw boom.notFound(`${schema} not found`);
+  // }
+console.log("document:", document )
   if (!mongoose.Types.ObjectId.isValid(pid)) {
     throw boom.notFound(`Product not found`);
   }
@@ -69,7 +70,7 @@ const updateCart = async (schema, otherSchema, cid) => {
   // return this.mongoDB.updateCart(this.collection, cid, this.otherCollection);
   const document = await schema.findById(cid);
   if (document === null) {
-    throw boom.notFound(`${schema} not found`);
+    throw boom.notFound(`${schema.baseModelName} not found`);
   }
 
   // const newProductsArray =  await Products.aggregate([{ $sample: { size: 1 } }]);
@@ -91,17 +92,26 @@ const updateCart = async (schema, otherSchema, cid) => {
   return updateDocument;
 }
 
+const updateCartState = async (schema, cid) => {
+  // return this.mongoDB.updateCart(this.collection, cid, this.otherCollection);
+  const document = await schema.findById(cid);
+  if (document === null) {
+    throw boom.notFound(`${schema.baseModelName} not found`);
+  }
+
+  const documentInc = await schema.findByIdAndUpdate(cid, { state: true });
+
+  if (!documentInc) {
+    throw boom.notFound(`${schema.baseModelName} found but product not found`);
+  }
+  // console.log(documentInc)
+  return documentInc
+}
+
 const getRandomCart = async (schema) =>{
   const randomIndex = Math.floor(Math.random() * 10);
   const randomCart = await schema.findOne().skip(randomIndex).lean();
   return randomCart.products;
-}
-
-
-const createCart = async (schema) => {
-  const document = { products: [] }
-  let newCart = await schema.create(document);
-  return newCart;
 }
 
 const productsCart = async (otherSchema) => {
@@ -115,4 +125,12 @@ const productsCart = async (otherSchema) => {
   return products;
 }
 
-module.exports = { addProductCart, deleteProductCart, updateCart, getRandomCart, createCart, productsCart}
+const createCart = async (schema, uid) => {
+  const document = {
+    owner: uid,
+    products: [] }
+  let newCart = await schema.create(document);
+  return newCart;
+}
+
+module.exports = { addProductCart, deleteProductCart, updateCart, updateCartState, getRandomCart, createCart, productsCart}

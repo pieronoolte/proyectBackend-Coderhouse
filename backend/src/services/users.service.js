@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 
-const getUserByCreds = async (mongoSchema, schema, email, password) => {
-  let user = await mongoSchema.findByEMail(schema,email);
+const getUserByCreds = async (schema, email, password) => {
+  let user = await schema.findOne({email: email});
   if (user && user.password) {
 
     let correctPwd =  bcrypt.compareSync(password, user.password);
