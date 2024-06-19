@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modificación de rol de Usuario</title>
+  <title>Ecomerce || Home</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -14,35 +14,72 @@
 
 <body>
   <div>
-    <h1>Bienvenido, {{user.name}} {{user.lastname}}</h1>
+    <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+          <a class="navbar-brand text-primary-emphasis fs-1">E-comerce</a>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link text-primary-emphasis fs-4">My Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-primary-emphasis fs-4" href='/api/carts/{{user.cart}}'>Cart</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-primary-emphasis fs-4" href='/api/sessions/login'>Log in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-primary-emphasis fs-4" href='/api/sessions/register'>Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-primary-emphasis fs-4" href="/api/sessions/logout">Logout</a>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-outline-primary mx-3 mb-2">{{user.name}} {{user.lastname}}</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {{!-- <h1>Bienvenido, {{user.name}} {{user.lastname}}</h1>
 
     <p>Email: {{user.email}}</p>
 
-    <a href="/api/sessions/logout">Logout</a>
+    <a class="nav-link" href="/api/sessions/logout">Logout</a>
 
-    <p><a href='/api/sessions/login'>Log in</a></p>
-    <p><a href='/api/sessions/register'>Register</a></p>
-    <p><a href='/api/carts/{{user.cart}}'>Cart</a></p>
+    <p><a class="nav-link" href='/api/sessions/login'>Log in</a></p>
+    <p><a class="nav-link" href='/api/sessions/register'>Register</a></p>
+    <p><a class="nav-link" href='/api/carts/{{user.cart}}'>Cart</a></p>
 
-    <p>Cart ID: {{user.cart}}</p>
+    <p>Cart ID: {{user.cart}}</p> --}}
 
-    <h2>Products:</h2>
+    <h2 class="text-primary-emphasis my-3">Products:</h2>
     <div id="productsList" class="d-flex flex-wrap m-2">
+      {{#if user}}
       {{#each products}}
-
-
-        <div class="card p-3 m-4" style="width: 20rem;">
-          <img src="/images/imageProduct.png" class="card-img-top" alt="imageProduct">
-          <div class="card-body">
-            <h3 class="card-title">{{this.title}}</h3>
-            <h5 class="card-title">$ {{this.price}}</h5>
-            <h5 class="card-text">{{this.description}}</h5>
-            <button class="addProduct btn btn-primary" data-id="{{this._id}}">Agregar</button>
-          </div>
+      <div class="card p-3 m-5" style="width: 20rem;">
+        <img src="/images/imageProduct.png" class="card-img-top" alt="imageProduct">
+        <div class="card-body">
+          <h3 class="card-title">{{this.title}}</h3>
+          <h5 class="card-title">$ {{this.price}}</h5>
+          <h5 class="card-text">{{this.description}}</h5>
+          <button class="addProduct btn btn-primary" data-id="{{this._id}}">Agregar</button>
         </div>
-
-
+      </div>
       {{/each}}
+      {{else}}
+      {{#each products}}
+      <div class="card p-3 m-5" style="width: 20rem;">
+        <img src="/images/imageProduct.png" class="card-img-top" alt="imageProduct">
+        <div class="card-body">
+          <h3 class="card-title">{{this.title}}</h3>
+          <h5 class="card-title">$ {{this.price}}</h5>
+          <h5 class="card-text">{{this.description}}</h5>
+        </div>
+      </div>
+      {{/each}}
+      {{/if}}
+
     </div>
 
 

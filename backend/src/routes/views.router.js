@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 router.get('/api/home/check', (req, res) => {
 
   if (req.signedCookies.jwt) {
-    res.redirect('/api/sessions/profile');
+    res.redirect('/api/home');
   } else {
     res.redirect('/api/sessions/register');
   }
@@ -29,7 +29,7 @@ router.get('/api/sessions/login', (req, res) => {
   // } else {
   //     res.render('layouts/login');
   // }
-  req.signedCookies.jwt ? res.redirect('/api/sessions/profile') : res.render('layouts/login');
+  req.signedCookies.jwt ? res.redirect('/api/sessions/home') : res.render('layouts/login');
 });
 
 // router.get('/api/products/myproducts', (req, res) => {

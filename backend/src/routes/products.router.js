@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const { getProducts, getPaginate, getNew, getMyProdutcs,getProduct, postProduct, patchProduct, deleteProduct } = require('../controllers/products.controller')
+const {validatorAdmin, validatorPremiun} = require('../middlewares/validatorRole.handler')
 
-
-router.get('/', getProducts);
-router.get('/paginate', getPaginate);
-router.get('/new', getNew);
+router.get('/',  validatorAdmin(), getProducts);
+router.get('/paginate', validatorAdmin(), getPaginate);
+router.get('/new', validatorPremiun(), getNew);
 router.get('/myproducts', getMyProdutcs)
 router.get('/:pid', getProduct);
-router.post('/', postProduct);
-router.patch('/:pid', patchProduct);
-router.delete('/:pid', deleteProduct)
+router.post('/', validatorPremiun(), postProduct);
+router.patch('/:pid', validatorPremiun(), patchProduct);
+router.delete('/:pid', validatorPremiun(), deleteProduct)
 
 module.exports = router
 

@@ -183,6 +183,9 @@ main {
   justify-content: center;
 }
 
+#custom-height {
+  height: 90px;
+}
 /* main form {
   width: 50%;
   padding: 20px;
