@@ -172,7 +172,7 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
-
+.vscode
 # yarn v2
 .yarn/cache
 .yarn/unplugged
@@ -211,9 +211,10 @@ $RECYCLE.BIN/
 *.msix
 *.msm
 *.msp
-
+.env
 # Windows shortcuts
 *.lnk
-
+.vscode
 # End of https://www.toptal.com/developers/gitignore/api/node,windows,linux,macos
-mongo_data/
+backend/mongo_data/
+backend/node_modules

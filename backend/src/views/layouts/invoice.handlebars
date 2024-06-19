@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modificación de rol de Usuario</title>
+</head>
+
+<body>
+  <h1>Gracias por su compra, {{user.name}} {{user.lastname}}</h1>
+
+  <p>Email: {{user.email}}</p>
+
+  <a href="/api/sessions/logout">Logout</a>
+
+  <p><a href='/api/sessions/login'>Log in</a></p>
+  <p><a href='/api/sessions/register'>Register</a></p>
+  <p><a href='/api/home'>Home</a></p>
+
+
+  {{#each this}}
+  {{#if _id}}
+  <div id="cart">
+    <h2> _id: {{_id}}</h2>
+    <h2>Products:</h2>
+    <ul id="productsList">
+      {{#each products}}
+      <li>
+        <div>
+          Name: <p>{{this.product.title}}</p> </br>
+          Price: <p class="productPrice">{{this.product.price}}</p>
+          Quantity: <p class="productQuantity">{{this.quantity}}</p>
+        </div>
+      </li>
+
+      {{/each}}
+    </ul>
+    <div>
+      Precio Total: <p id="cart__quantity"></p>
+      Total de Productos: <p id="cart__price"></p>
+    </div>
+
+  </div>
+  {{/if}}
+  {{/each}}
+
+  <script>
+
+    const productQuantities = document.querySelectorAll('.productQuantity');
+    const productPrices = document.querySelectorAll('.productPrice');
+    let totalPrice = 0;
+    let totalQuantity = 0;
+
+    productPrices.forEach(priceElement => {
+      totalPrice += parseInt(priceElement.textContent);
+    });
+    productQuantities.forEach(quantityElement => {
+      totalQuantity += parseInt(quantityElement.textContent);
+    });
+    document.getElementById('cart__price').textContent = totalPrice;
+    document.getElementById('cart__quantity').textContent = totalQuantity;
+
+  </script>
+</body>
+
+</html>
