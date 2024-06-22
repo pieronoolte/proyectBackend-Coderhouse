@@ -3,7 +3,9 @@ var mongoosePaginate = require("mongoose-paginate-v2");
 
 
 const defaultConnection = mongoose.connection;
+const { config } = require('../../config');
 const ecomerceDb = defaultConnection.useDb('Ecomerce');
+
 
 // Define el esquema del producto utilizando Mongoose
 const productSchema = new mongoose.Schema({

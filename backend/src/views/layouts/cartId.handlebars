@@ -53,6 +53,9 @@
           <div class="col d-flex flex-row"><p class="m-2 text-primary-emphasis">Name:</p> <p class="m-2">{{this.product.title}}</p></div>
           <div class="col d-flex flex-row"><p class="m-2 text-primary-emphasis">Price:</p> <p class="productPrice m-2">{{this.product.price}}</p></div>
           <div class="col d-flex flex-row"><p class="m-2 text-primary-emphasis">Quantity:</p> <p class="productQuantity m-2">{{this.quantity}}</p></div>
+          <div class="col">
+            <button class="deleteProduct btn btn-danger m-2 fs-4" data-id="{{this.product._id}}">Eliminar</button>
+          </div>
         </div>
       </li>
 
@@ -61,56 +64,13 @@
     <div class="row mb-3 mt-5 border rounded border-2 border-primary-subtle m-5">
       <div class="col-5 d-flex flex-row"><p class="m-2 text-primary-emphasis">Total de Productos:</p> <p id="cart__quantity" class="m-2"></p></div>
       <div class="col-4 d-flex flex-row"><p class="m-2 text-primary-emphasis">Precio Total:</p> <p id="cart__price" class="m-2"></p></div>
-      <button class="payCart col-2 btn btn-primary m-2 fs-4" data-id="{{this._id}}">Pagar</button>
+      <button id="cartPay" class="payCart col-2 btn btn-primary m-2 fs-4" data-id="{{_id}}">Pagar</button>
     </div>
   </div>
   {{/if}}
   {{/each}}
 
-  <script>
-
-    const productQuantities = document.querySelectorAll('.productQuantity');
-    const productPrices = document.querySelectorAll('.productPrice');
-    let totalPrice = 0;
-    let totalQuantity = 0;
-
-    productPrices.forEach(priceElement => {
-      totalPrice += parseInt(priceElement.textContent);
-    });
-    productQuantities.forEach(quantityElement => {
-      totalQuantity += parseInt(quantityElement.textContent);
-    });
-    document.getElementById('cart__price').textContent = totalPrice;
-    document.getElementById('cart__quantity').textContent = totalQuantity;
-
-    document.getElementById('cart').addEventListener('click', async () => {
-
-      const cartId = '{{products._id}}';
-
-      const actionUrl = `/api/carts/${cartId}/pay`;
-
-      try {
-        console.log("cartid:",cartId)
-        const response = await fetch(actionUrl, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (response.ok) {
-          window.location.href = `/api/carts/${cartId}/invoice`;
-          console.log("hola")
-        } else {
-          console.error('Error:', response.statusText);
-        }
-
-      } catch (error) {
-        console.error('Error updating role:', error);
-        alert('Error updating role');
-      }
-    });
-  </script>
+  <script src="/js/cartId.js"></script>
 </body>
 
 </html>

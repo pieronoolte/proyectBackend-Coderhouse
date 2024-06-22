@@ -4,23 +4,20 @@ const UsersService = require('../dao/models/users.dao');
 const serviceUser = new UsersService();
 const jwt = require('jsonwebtoken');
 const { config } = require('../../config');
-const Users = require('../schemas/user.schema')
 
-const getHome = async (req, res, next) => {
+const getHome = async (req, res) => {
   const { limit } = req.query;
   const size = limit || 50;
   let products;
   try {
-    products = await service.find(size);
     let user;
     const token = req.signedCookies.jwt;
-
     const decodedToken = await jwt.verify(token, config.jwtSecret);
-
     const userName = decodedToken.name;
     const userLastName = decodedToken.lastname;
     const userEmail = decodedToken.email;
-    console.log("token:", decodedToken)
+
+    products = await service.find(size);
     const cartUser = await serviceUser.findOne(decodedToken.id)
     const cartUserId = cartUser.cart
     console.log("cart:", cartUser)

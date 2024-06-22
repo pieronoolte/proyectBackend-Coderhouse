@@ -1,14 +1,16 @@
 require('dotenv').config();
 
 const config = {
-  env: process.env.NODE_ENV || 'dev',
+  env: process.env.NODE_ENV,
   isProd: process.env.NODE_ENV === 'production',
-  port: process.env.PORT || 3021,
-  dbUrl: process.env.MONGO_URL || 'mongodb://root:root123@localhost:27017?tls=false',
-  dbUrlTest: process.env.MONGO_URL_TEST || 'mongodb://test:test123@localhost:27017?authSource=Ecomerce',
-  dbName: process.env.MONGO_DB_NAME || 'Ecomerce',
+  port: process.env.PORT,
+  dbUrl: process.env.MONGO_URL,
+  dbUrlTest: process.env.MONGO_URL_TEST,
+  dbName: process.env.MONGO_DB_NAME,
   apikey: process.env.API_KEY,
-  jwtSecret: process.env.JWT_SECRET
+  jwtSecret: process.env.JWT_SECRET,
+  userNM: process.env.USER_NODEMAILER,
+  passwordNM: process.env.PASSWORD_NODEMAILER
 };
 
 module.exports = { config };

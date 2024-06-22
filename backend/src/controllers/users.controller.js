@@ -1,8 +1,5 @@
 const UsersService = require('../dao/models/users.dao');
-const CartsService = require('../dao/models/carts.dao');
 const service = new UsersService();
-const serviceCart = new CartsService();
-
 
 
 const getUsers = async (req, res) => {
@@ -15,19 +12,8 @@ const getUsers = async (req, res) => {
 
 const getUser = async (req, res, next) => {
   try {
-    const isActiveString = req.query.isActive;
-    const isActive = isActiveString ? isActiveString.toLowerCase() === 'true' : false;
     const { uid } = req.params;
     const user = await service.findOne(uid);
-    // const productsCart = await serviceCart.getRandomCart()
-    console.log(user)
-
-    // res.render('index', {
-    //   name: user.name,
-    //   isActive: isActive,
-    //   products: productsCart
-    // });
-
     res.render('layouts/updatedUser', { user: user })
   } catch (error) {
     next(error)
@@ -44,7 +30,6 @@ const putUserRole = async (req, res, next) => {
     next(error)
   }
 }
-
 
 const deleteUserLastConnection = async (req, res, next) => {
   try {

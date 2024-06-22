@@ -8,7 +8,7 @@ const { productsCart } = require('./carts.service');
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
-const generateMongo = async (schema, quantity, otherSchema ) => {
+const generateMongo = async (schema, quantity) => {
   for (let i = 0; i < quantity; i++) {
     let structureSchema = {};
     switch (schema) {
@@ -36,21 +36,36 @@ const generateMongo = async (schema, quantity, otherSchema ) => {
           password: faker.internet.password()
         };
         break;
-      case Carts:
-        structureSchema = {
-          owner: new ObjectId('000000000000000000000000'),
-          products: await productsCart(otherSchema),
-        };
-        break;
       default:
         break;
     }
     try {
       await schema.create(structureSchema);
-      console.log('Data inserted successfully.', schema);
     } catch (error) {
       console.error('Error inserting data:', error);
     }
+  }
+  // Verifica si el usuario admin ya existe
+  const adminExists = await Users.findOne({ email: 'admin@ecomerce.com' });
+
+  if (!adminExists) {
+    try {
+      await Users.create({
+        name: 'Admin',
+        lastname: 'Ecomerce',
+        birthdate: '01/01/2000',
+        email: 'admin@ecomerce.com',
+        phone: faker.phone.number(),
+        address: faker.location.direction(),
+        password: '123456',
+        role: 'admin'
+      });
+      console.log('Admin user created successfully.');
+    } catch (error) {
+      console.error('Error creating admin user:', error);
+    }
+  } else {
+    console.log('Admin user already exists.');
   }
 }
 
@@ -127,7 +142,6 @@ const findOneMongo = async(bd, schema, id) => {
     } else {
       document = await schema.findById(id).lean();
     }
-    console.log(document)
     if (!document) {
       throw boom.notFound(`${schema.modelName} not found`);
     }

@@ -20,7 +20,7 @@
           <a class="navbar-brand text-primary-emphasis fs-1">E-comerce</a>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link text-primary-emphasis fs-4">My Products</a>
+              <a class="nav-link text-primary-emphasis fs-4" href='/api/products/myproducts'>My Products</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-primary-emphasis fs-4" href='/api/carts/{{user.cart}}'>Cart</a>
@@ -41,20 +41,9 @@
         </div>
       </div>
     </nav>
-    {{!-- <h1>Bienvenido, {{user.name}} {{user.lastname}}</h1>
-
-    <p>Email: {{user.email}}</p>
-
-    <a class="nav-link" href="/api/sessions/logout">Logout</a>
-
-    <p><a class="nav-link" href='/api/sessions/login'>Log in</a></p>
-    <p><a class="nav-link" href='/api/sessions/register'>Register</a></p>
-    <p><a class="nav-link" href='/api/carts/{{user.cart}}'>Cart</a></p>
-
-    <p>Cart ID: {{user.cart}}</p> --}}
 
     <h2 class="text-primary-emphasis my-3">Products:</h2>
-    <div id="productsList" class="d-flex flex-wrap m-2">
+    <div id="productsList" class="d-flex flex-wrap m-2" data-cart-id="{{user.cart}}">
       {{#if user}}
       {{#each products}}
       <div class="card p-3 m-5" style="width: 20rem;">
@@ -79,42 +68,10 @@
       </div>
       {{/each}}
       {{/if}}
-
     </div>
-
-
   </div>
 
-  <script>
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const cartId = '{{user.cart}}';
-      console.log('DOM fully loaded and parsed');
-      console.log('Cart ID:', cartId);
-      document.getElementById('productsList').addEventListener('click', async (e) => {
-        if (e.target && e.target.classList.contains('addProduct')) {
-          const productId = e.target.getAttribute('data-id');
-          const actionUrl = `/api/carts/${cartId}/product/${productId}`;
-
-          try {
-            const response = await fetch(actionUrl, {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            });
-            console.log(`se agrego a carrito el producto ${productId}`)
-
-          } catch (error) {
-            console.error('Error deleting product:', error);
-            alert('Error deleting product');
-          }
-        } else {
-          console.log("hola")
-        }
-      });
-    });
-  </script>
+  <script src="/js/home.js"></script>
 </body>
 
 </html>

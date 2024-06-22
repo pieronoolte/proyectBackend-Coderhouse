@@ -28,55 +28,57 @@
 
 
   <div class="d-flex justify-content-center align-items-center mt-5">
-    <h1 class="mb-2 text-primary">Nuevo Producto</h1>
+    <h1 class="mb-2 text-primary">Producto:</h1>
   </div>
   <div class="d-flex justify-content-center align-items-center">
 
 
-    <form method="POST" action="/api/products" class="row g-3 w-50 border mt-2 m-5 border-2 rounded border-primary-subtle">
+    <form id="productForm"  data-id="{{product._id}}" class="row g-3 w-50 border mt-2 m-5 border-2 rounded border-primary-subtle">
 
       <div class="row mb-3 mt-5">
         <label for="formTitle" class="col-sm-2 col-form-label fs-5 text-primary-emphasis">Title</label>
         <div class="col-sm-10">
-          <input type="text" name="title" placeholder="Title" class="form-control" id="formTitle"/>
+          <input type="text" name="title" placeholder="Title" class="form-control" id="formTitle" value="{{product.title}}"/>
         </div>
       </div>
       <div class="row mb-3">
         <label for="formDescription" class="col-sm-2 col-form-label fs-5 text-primary-emphasis">Description</label>
         <div class="col-sm-10">
-          <input type="text" name="description" placeholder="Description" class="form-control" id="formDescription"/>
+          <input type="text" name="description" placeholder="Description" class="form-control" id="formDescription" value="{{product.description}}"/>
         </div>
       </div>
       <div class="row mb-3">
         <label for="formPrice" class="col-sm-2 col-form-label fs-5 text-primary-emphasis">Price</label>
         <div class="col-sm-10">
-          <input type="text" name="price" placeholder="Price" class="form-control" id="formPrice"/>
+          <input type="text" name="price" placeholder="Price" class="form-control" id="formPrice" value="{{product.price}}"/>
         </div>
       </div>
       <div class="row mb-3">
         <label for="formStock" class="col-sm-2 col-form-label fs-5 text-primary-emphasis">Stock</label>
         <div class="col-sm-10">
-          <input type="text" name="stock" placeholder="Stock" class="form-control" id="formStock"/>
+          <input type="text" name="stock" placeholder="Stock" class="form-control" id="formStock" value="{{product.stock}}"/>
         </div>
       </div>
       <div class="row mb-3">
         <label for="formCategory" class="col-sm-2 col-form-label fs-5 text-primary-emphasis">Category</label>
         <div class="col-sm-10">
-          <input type="text" name="category" placeholder="Category" class="form-control" id="formCategory"/>
+          <input type="text" name="category" placeholder="Category" class="form-control" id="formCategory" value="{{product.category}}"/>
         </div>
       </div>
       <div class="row mb-3">
         <label for="formThumbnails" class="col-sm-2 col-form-label fs-5 text-primary-emphasis">Thumbnails</label>
         <div class="col-sm-10">
-          <input type="text" name="thumbnails" placeholder="Thumbnails" class="form-control" id="formThumbnails"/>
+          <input type="text" name="thumbnails" placeholder="Thumbnails" class="form-control" id="formThumbnails" value="{{product.thumbnails}}"/>
         </div>
       </div>
 
       <div class="col-12 text-center mb-3">
-        <input type="submit" value="Crear Producto" class="btn btn-primary text-center" />
+        {{!-- <input type="submit" value="Actualizar Producto" class="btn btn-primary text-center" /> --}}
+        <button id="updateProduct" class="col-2 btn btn-primary m-2 fs-4" data-id="{{_id}}">Actualizar Producto</button>
       </div>
     </form>
   </div>
+  <script src="/js/updateProduct.js"></script>
 </body>
 
 </html>

@@ -4,6 +4,7 @@ const { config } = require('../../config');
 const UsersService = require('../dao/models/users.dao');
 const serviceUser = new UsersService();
 
+
 function validatorAdmin() {
   return async (req, res, next) => {
     const token = req.signedCookies.jwt;
@@ -22,11 +23,6 @@ function validatorAdmin() {
 
 function validatorPremiun() {
   return async (req, res, next) => {
-    // const data = req[property]
-    // const { error } = schema.validate(data, { abortEarly: false });
-    // if (error) {
-    //   next(boom.badRequest(error));
-    // }
     const token = req.signedCookies.jwt;
     const decodedToken = await jwt.verify(token, config.jwtSecret);
     console.log("token:", decodedToken)

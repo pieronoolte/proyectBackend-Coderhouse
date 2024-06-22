@@ -1,5 +1,7 @@
 const ProductsService = require('../dao/models/products.dao')
-const service = new ProductsService;
+const service = new ProductsService();
+const UsersService = require('../dao/models/users.dao');
+const serviceUser = new UsersService();
 const jwt = require('jsonwebtoken');
 const { config } = require('../../config');
 const mongoose = require('mongoose');
@@ -23,34 +25,36 @@ const getPaginate = async (req, res) => {
 
 const getNew = (req, res) => {
   res.render('layouts/createProduct')
-  // req.signedCookies.jwt ? res.render('layouts/createProduct') : res.render('layouts/login');
 };
 
 const getMyProdutcs = async (req, res) => {
   const token = req.signedCookies.jwt;
   const decodedToken = await jwt.verify(token, config.jwtSecret);
-  const products = await service.findMyProducts(decodedToken.id);
   const userName = decodedToken.name;
   const userLastName = decodedToken.lastname;
   const userEmail = decodedToken.email;
 
+  const products = await service.findMyProducts(decodedToken.id);
+  const cartUser = await serviceUser.findOne(decodedToken.id)
+  const cartUserId = cartUser.cart
   const user = {
     name: userName,
     lastname: userLastName,
-    email: userEmail
+    email: userEmail,
+    cart: cartUserId
   };
+
   res.render('layouts/myProducts', {
     user: user,
     products: products
   });
-  // req.signedCookies.jwt ? res.render('layouts/createProduct') : res.render('layouts/login');
 };
 
 const getProduct = async (req, res, next) => {
   try {
     const { pid } = req.params;
     const product = await service.findOne(pid);
-    res.render('layouts/productId', {
+    res.render('layouts/updateProduct', {
       product: product
     });
   } catch (error) {
@@ -58,12 +62,11 @@ const getProduct = async (req, res, next) => {
   }
 }
 
+
 const postProduct = async (req, res, next) => {
   try {
     const token = req.signedCookies.jwt;
-    console.log(token)
     const decodedToken = await jwt.verify(token, config.jwtSecret);
-    console.log(decodedToken)
     let title = req.body.title;
     let description = req.body.description;
     let price = req.body.price;
@@ -71,7 +74,7 @@ const postProduct = async (req, res, next) => {
     let category = req.body.category;
     let thumbnails = req.body.thumbnails;
     let ownerId;
-    console.log(decodedToken)
+    console.log("body: ", req.body)
     if (decodedToken) {
       ownerId = new ObjectId(decodedToken.id);
       console.log(ownerId)
@@ -79,7 +82,7 @@ const postProduct = async (req, res, next) => {
       ownerId = new ObjectId('000000000000000000000000');
     }
 
-    const product = await service.createProduct({
+    await service.createProduct({
       title: title,
       description: description,
       code: Math.floor(Math.random() * (50000 - 10000) + 10000),
@@ -91,20 +94,17 @@ const postProduct = async (req, res, next) => {
       owner: ownerId
     });
 
-
-    res.status(201).redirect(`/api/products/${product._id}`);
-    // res.status(201).json(product)
+    res.status(201).redirect('/api/products/myproducts');
   } catch (error) {
     next(error)
   }
 
 }
 
-const patchProduct = async (req, res, next) => {
+const putProduct = async (req, res, next) => {
   try {
     const { pid } = req.params;
-    const body = req.body;
-    const product = await service.updateProduct(pid, body);
+    const product = await service.updateProduct(pid, req.body);
     res.json(product);
   } catch (error) {
     next(error)
@@ -123,4 +123,4 @@ const deleteProduct = async (req, res, next) => {
 }
 
 
-module.exports = { getProducts, getPaginate, getNew, getMyProdutcs, getProduct, postProduct, patchProduct, deleteProduct }
+module.exports = { getProducts, getPaginate, getNew, getMyProdutcs, getProduct, postProduct, putProduct, deleteProduct }

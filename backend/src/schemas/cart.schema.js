@@ -2,6 +2,7 @@
 const { boolean } = require('joi');
 const mongoose = require('mongoose');
 const defaultConnection = mongoose.connection;
+const { config } = require('../../config');
 const ecomerceDb = defaultConnection.useDb('Ecomerce');
 
 
