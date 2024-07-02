@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (response.ok) {
         window.location.href = '/api/home';
-        console.log("hola")
       } else {
         console.error('Error:', response.statusText);
       }

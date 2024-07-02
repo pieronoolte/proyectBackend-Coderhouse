@@ -14,16 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('cart__price').textContent = totalPrice;
   document.getElementById('cart__quantity').textContent = totalQuantity;
-
   const cartId = document.getElementById('cartPay').getAttribute('data-id');
-  console.log("cartid:", cartId)
 
   document.getElementById('cartPay').addEventListener('click', async () => {
 
     const actionUrl = `/api/carts/${cartId}/pay`;
 
     try {
-      console.log("cartid:", cartId)
       const response = await fetch(actionUrl, {
         method: 'PUT',
         headers: {
@@ -33,16 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (response.ok) {
         window.location.href = `/api/carts/${cartId}/invoice`;
-        console.log("hola")
       } else {
         console.error('Error:', response.statusText);
       }
 
     } catch (error) {
       console.error('Error updating role:', error);
-      alert('Error updating role');
     }
   });
+
 
   const deleteButtons = document.querySelectorAll('.deleteProduct');
 
@@ -60,12 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (response.ok) {
           window.location.href = `/api/carts/${cartId}`;
-          console.log("hola")
         } else {
           console.error('Error:', response.statusText);
         }
       } catch (error) {
-
+        console.error('Error updating role:', error);
       }
     });
   });

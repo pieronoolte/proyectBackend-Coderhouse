@@ -9,14 +9,27 @@ Instrucciones sobre cómo instalar y configurar el proyecto.
 
 ```javascript
 git clone https://github.com/pieronoolte/proyectBackend-Coderhouse.git
-cd tu_repositorio/backend
+cd tu_repositorio
 npm install
+```
+
+
+## USO EN DESAROLLO
+
+Lo primero que haremos es abrir docker e inicializar el docker-compose:
+```javascript
+docker-compose up -d mongodb
+```
+
+Luego se realiza se ejecuta el comando:
+```javascript
+npm run dev
 ```
 
 ## DEPLOYMENT
 
 Para visualizar la página en producción se puede visitar el siguiente enlance:
-[Ecomerce Coder house](https://oscarnovas.com)
+[Ecomerce Coder house](https://proyectbackend-coderhouse-production.up.railway.app)
 
 ## ESTRUCTRURA DEL PROYECTO
 
