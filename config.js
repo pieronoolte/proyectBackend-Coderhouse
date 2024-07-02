@@ -5,14 +5,14 @@
 const config = {
   env: process.env.NODE_ENV,
   isDev: 'development',
-  port: process.env.PORT,
-  dbUrl: process.env.MONGO_URL,
+  port: 8080,
+  dbUrl: "mongodb://root:root123@localhost:27017?tls=false",
   dbUrlTest: process.env.MONGO_URL_TEST,
-  dbName: process.env.MONGO_DB_NAME,
-  apikey: process.env.API_KEY,
-  jwtSecret: process.env.JWT_SECRET,
-  userNM: process.env.USER_NODEMAILER,
-  passwordNM: process.env.PASSWORD_NODEMAILER
+  dbName: 'Ecomerce',
+  apikey: 3323254,
+  jwtSecret: 'qR.Dck<:4yeAaf%$v%saYq&@/kkcNp9b_58Jx.da/Z_:KZVd@sbFy5MPAH',
+  userNM: 'pieronolte@gmail.com',
+  passwordNM: 'ejfj vkmt amqr qyac'
 };
 
 // Verificación de configuración mínima requerida
