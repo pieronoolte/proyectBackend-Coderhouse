@@ -216,5 +216,5 @@ $RECYCLE.BIN/
 *.lnk
 .vscode
 # End of https://www.toptal.com/developers/gitignore/api/node,windows,linux,macos
-mongo_data/
+mongo_data
 node_modules
