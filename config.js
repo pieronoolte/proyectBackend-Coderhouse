@@ -1,8 +1,10 @@
-require('dotenv').config();
+
+// Utilizar solo en Desaroollo
+// require('dotenv').config();
 
 const config = {
   env: process.env.NODE_ENV,
-  isProd: process.env.NODE_ENV === 'production',
+  isDev: 'development',
   port: process.env.PORT,
   dbUrl: process.env.MONGO_URL,
   dbUrlTest: process.env.MONGO_URL_TEST,
@@ -12,5 +14,6 @@ const config = {
   userNM: process.env.USER_NODEMAILER,
   passwordNM: process.env.PASSWORD_NODEMAILER
 };
+
 
 module.exports = { config };
