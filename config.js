@@ -6,7 +6,7 @@ const config = {
   env: process.env.NODE_ENV,
   isDev: 'development',
   port: 8080,
-  dbUrl: "mongodb://root:root123@localhost:27017",
+  dbUrl: "mongodb://root:root123@proyectbackend-coderhouse.railway.internal:27017",
   dbUrlTest: process.env.MONGO_URL_TEST,
   dbName: 'Ecomerce',
   apikey: 3323254,
