@@ -1,6 +1,6 @@
 
-// Utilizar solo en Desaroollogit add .
-// require('dotenv').config();
+// Utilizar solo en Desarollo
+//require('dotenv').config();
 
 const config = {
   env: process.env.NODE_ENV,
@@ -16,9 +16,10 @@ const config = {
 };
 
 // Verificación de configuración mínima requerida
-const requiredVars = ['NODE_ENV', 'PORT', 'MONGO_URL', 'MONGO_DB_NAME'];
+const requiredVars = ['env', 'port', 'dbUrl', 'dbName'];
 const missingVars = requiredVars.filter(key => !config[key]);
 
+console.log(config)
 if (missingVars.length > 0) {
   console.error(`Faltan las siguientes variables de entorno: ${missingVars.join(', ')}`);
 }
