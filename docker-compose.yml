@@ -9,14 +9,14 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root123
     volumes:
-      - ./backend/mongo_data:/data/db
+      - ./mongo_data:/data/db
 
   mongodb-test:
     image: mongo:5.0
     ports:
-      - 27017:27017
+      - 27018:27017
     environment:
       - MONGO_INITDB_ROOT_USERNAME=test
       - MONGO_INITDB_ROOT_PASSWORD=test123
     volumes:
-      - ./backend/mongo_data:/data/db
+      - ./mongo_data:/data/db

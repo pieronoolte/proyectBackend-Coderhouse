@@ -1,6 +1,0 @@
-{
-  "moduleFileExtensions": ["js"],
-  "rootDir": ".",
-  "testEnvironment": "node",
-  "testRegex": "int.js$"
-}

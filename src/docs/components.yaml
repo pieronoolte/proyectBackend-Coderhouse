@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  title: Schemas
+  version: 1.0.0
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado por MongoDB para el carrito.
+        products:
+          type: array
+          items:
+            type: object
+      required:
+        - products
+    Message:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado por MongoDB para el mensaje.
+        email:
+          type: string
+        username:
+          type: string
+        message:
+          type: string
+      required:
+        - email
+        - message
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado por MongoDB para el producto.
+        title:
+          type: string
+        description:
+          type: string
+        code:
+          type: number
+        price:
+          type: number
+        status:
+          type: boolean
+        stock:
+          type: number
+          minimum: 10
+          maximum: 100
+        category:
+          type: string
+        thumbnails:
+          type: string
+      required:
+        - title
+        - description
+        - code
+        - price
+        - status
+        - stock
+        - category
+        - thumbnails
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado por MongoDB para el usuario.
+        name:
+          type: string
+        lastname:
+          type: string
+        birthdate:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        password:
+          type: string
+      required:
+        - name
+        - lastname
+        - birthdate
+        - email
